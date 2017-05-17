@@ -25,10 +25,10 @@ public class MainActivity extends AppCompatActivity {
                 .setAction("Action", null).show());
 
         FragmentManager fm = getSupportFragmentManager();
-        MessagesListFragment messagesListFragment = (MessagesListFragment) fm.findFragmentById(R.id.fragmentContainer);
+        MessagesListFragment messagesListFragment = (MessagesListFragment) fm.findFragmentById(R.id.frameLayout_fragmentContainer);
         if (messagesListFragment == null) {
             messagesListFragment = MessagesListFragment.newInstance();
-            fm.beginTransaction().add(R.id.fragmentContainer, messagesListFragment).commit();
+            fm.beginTransaction().add(R.id.frameLayout_fragmentContainer, messagesListFragment).commit();
         }
         MessagesListContract.Presenter presenter = new MessagesListPresenter();
         messagesListFragment.setPresenter(presenter);

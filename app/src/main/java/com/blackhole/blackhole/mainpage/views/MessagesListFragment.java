@@ -2,7 +2,10 @@ package com.blackhole.blackhole.mainpage.views;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,9 +15,17 @@ import android.view.ViewGroup;
 
 import com.blackhole.blackhole.R;
 import com.blackhole.blackhole.mainpage.contracts.MessagesListContract;
+import com.blackhole.blackhole.mainpage.ui.MessagesListRecyclerAdapter;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MessagesListFragment extends Fragment implements MessagesListContract.View {
+    private MessagesListRecyclerAdapter mMessagesListRecyclerAdapter;
     private MessagesListContract.Presenter mPresenter;
+
+    @BindView(R.id.recyclerView_messagesList)
+    RecyclerView mMessagesListRecyclerView;
 
     public MessagesListFragment() {
         // Required empty public constructor
@@ -28,6 +39,8 @@ public class MessagesListFragment extends Fragment implements MessagesListContra
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        mMessagesListRecyclerAdapter = new MessagesListRecyclerAdapter();
+
         setHasOptionsMenu(true);
     }
 
@@ -36,6 +49,14 @@ public class MessagesListFragment extends Fragment implements MessagesListContra
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_messages_list, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        ButterKnife.bind(this, view);
+
+        mMessagesListRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        mMessagesListRecyclerView.setAdapter(mMessagesListRecyclerAdapter);
     }
 
     @Override

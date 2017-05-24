@@ -6,6 +6,7 @@
     <!-- NOTE: allowBackup is set to false temporarily, as it is not our main goal so far -->
     <!-- NOTE: Google App Indexing missing warning is ignored temporarily, as it is not our main goal so far -->
     <application
+        android:name=".App"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"

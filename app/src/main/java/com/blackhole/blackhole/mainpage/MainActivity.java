@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.blackhole.blackhole.R;
+import com.blackhole.blackhole.data.repositories.Repo;
 import com.blackhole.blackhole.mainpage.contracts.MessagesListContract;
 import com.blackhole.blackhole.mainpage.presenters.MessagesListPresenter;
 import com.blackhole.blackhole.mainpage.views.MessagesListFragment;
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
             messagesListFragment = MessagesListFragment.newInstance();
             fm.beginTransaction().add(R.id.frameLayout_fragmentContainer, messagesListFragment).commit();
         }
-        MessagesListContract.Presenter presenter = new MessagesListPresenter();
+        MessagesListContract.Presenter presenter = new MessagesListPresenter(Repo.getUsersRepo(), Repo.getMessagesRepo());
         messagesListFragment.setPresenter(presenter);
     }
 }

@@ -14,8 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.blackhole.blackhole.R;
+import com.blackhole.blackhole.data.entities.Message;
 import com.blackhole.blackhole.mainpage.contracts.MessagesListContract;
 import com.blackhole.blackhole.mainpage.ui.MessagesListRecyclerAdapter;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,6 +60,8 @@ public class MessagesListFragment extends Fragment implements MessagesListContra
 
         mMessagesListRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mMessagesListRecyclerView.setAdapter(mMessagesListRecyclerAdapter);
+
+        mPresenter.viewCreated();
     }
 
     @Override
@@ -72,5 +77,23 @@ public class MessagesListFragment extends Fragment implements MessagesListContra
     @Override
     public void setPresenter(MessagesListContract.Presenter presenter) {
         mPresenter = presenter;
+    }
+
+    @Override
+    public void switchToNicknamePage() {
+        getActivity().finish();
+    }
+
+    @Override
+    public void showFailToBeOnlineError() {
+    }
+
+    @Override
+    public void showFailToFetchMessagesError() {
+    }
+
+    @Override
+    public void appendMessages(ArrayList<Message> messages) {
+        mMessagesListRecyclerAdapter.appendMessages(messages);
     }
 }

@@ -1,6 +1,9 @@
 package com.blackhole.blackhole.mainpage.contracts;
 
+import com.blackhole.blackhole.data.entities.Message;
 import com.blackhole.blackhole.framework.BaseView;
+
+import java.util.ArrayList;
 
 /**
  * Author: perqin
@@ -8,7 +11,17 @@ import com.blackhole.blackhole.framework.BaseView;
  */
 
 public interface MessagesListContract {
-    interface Presenter {}
+    interface Presenter {
+        void viewCreated();
+    }
 
-    interface View extends BaseView<Presenter> {}
+    interface View extends BaseView<Presenter> {
+        void switchToNicknamePage();
+
+        void showFailToBeOnlineError();
+
+        void showFailToFetchMessagesError();
+
+        void appendMessages(ArrayList<Message> messages);
+    }
 }

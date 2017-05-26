@@ -26,10 +26,12 @@ public class MessagesListRecyclerAdapter extends RecyclerView.Adapter<MessagesLi
 
     public void prependMessages(ArrayList<Message> messages) {
         mDataSet.addAll(0, messages);
+        notifyItemRangeInserted(0, messages.size());
     }
 
     public void appendMessages(ArrayList<Message> messages) {
         mDataSet.addAll(messages);
+        notifyItemRangeInserted(mDataSet.size() - messages.size(), messages.size());
     }
 
     @Override

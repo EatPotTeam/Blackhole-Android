@@ -2,6 +2,8 @@ package com.blackhole.blackhole.data.repositories;
 
 import com.blackhole.blackhole.data.entities.Message;
 
+import java.util.ArrayList;
+
 import io.reactivex.Observable;
 
 /**
@@ -22,7 +24,11 @@ class MessagesRepository implements IMessagesRepository {
     private MessagesRepository() {}
 
     @Override
-    public Observable<Message> fetchNewMessages(String userId) {
-        return null;
+    public Observable<ArrayList<Message>> fetchNewMessages(String userId) {
+        ArrayList<Message> messages = new ArrayList<>();
+        messages.add(new Message());
+        messages.add(new Message());
+        messages.add(new Message());
+        return Observable.just(messages);
     }
 }

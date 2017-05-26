@@ -12,5 +12,5 @@ public interface IUsersRepository {
 
     String getUserId();
 
-    Observable<Object> refreshLastActiveTime(String userId);
+    Observable<Object> refreshLastActiveTime();
 }

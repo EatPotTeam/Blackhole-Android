@@ -1,5 +1,7 @@
 package com.blackhole.blackhole.data.repositories;
 
+import com.blackhole.blackhole.framework.Irrelevant;
+
 import io.reactivex.Observable;
 
 /**
@@ -26,11 +28,11 @@ class UsersRepository implements IUsersRepository {
 
     @Override
     public String getUserId() {
-        return null;
+        return "mock_id";
     }
 
     @Override
-    public Observable<Object> refreshLastActiveTime(String userId) {
-        return null;
+    public Observable<Object> refreshLastActiveTime() {
+        return Observable.just(Irrelevant.INSTANCE);
     }
 }

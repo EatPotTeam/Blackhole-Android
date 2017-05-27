@@ -1,6 +1,7 @@
 package com.blackhole.blackhole.data.repositories;
 
 import com.blackhole.blackhole.data.entities.Message;
+import com.blackhole.blackhole.framework.RxResult;
 
 import java.util.ArrayList;
 
@@ -13,4 +14,6 @@ import io.reactivex.Observable;
 
 public interface IMessagesRepository {
     Observable<ArrayList<Message>> fetchNewMessages(String userId);
+
+    Observable<RxResult<ArrayList<Message>>> startFetchingNewMessages(String userId);
 }

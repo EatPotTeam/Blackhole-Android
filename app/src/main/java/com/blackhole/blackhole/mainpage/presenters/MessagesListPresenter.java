@@ -29,13 +29,19 @@ public class MessagesListPresenter implements MessagesListContract.Presenter {
         if (mUserRepository.getUserId() == null) {
             mView.switchToNicknamePage();
         } else {
-            mUserRepository.refreshLastActiveTime().subscribe(o -> mMessageRepository.fetchNewMessages(mUserRepository.getUserId()).subscribe(mView::appendMessages, throwable -> {
-                Log.w(TAG, "viewCreated: Failed to fetch messages", throwable);
-                mView.showFailToFetchMessagesError();
-            }), throwable -> {
-                Log.w(TAG, "viewCreated: Failed to refresh last active time", throwable);
-                mView.showFailToBeOnlineError();
-            });
+            mUserRepository.refreshLastActiveTime()
+                    .flatMap(o -> mMessageRepository.startFetchingNewMessages(mUserRepository.getUserId()))
+                    .subscribe(arrayListRxResult -> {
+                        if (arrayListRxResult.isError()) {
+                            Log.w(TAG, "viewCreated: Failed to fetch some message", arrayListRxResult.error());
+                            mView.showFailToFetchMessagesError();
+                            return;
+                        }
+                        mView.appendMessages(arrayListRxResult.result());
+                    }, throwable -> {
+                        Log.w(TAG, "viewCreated: Failed to fetch", throwable);
+                        mView.showFailToBeOnlineError();
+                    });
         }
     }
 }

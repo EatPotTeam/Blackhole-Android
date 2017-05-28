@@ -13,6 +13,8 @@ import java.util.ArrayList;
 public interface MessagesListContract {
     interface Presenter {
         void viewCreated();
+
+        void destroy();
     }
 
     interface View extends BaseView<Presenter> {

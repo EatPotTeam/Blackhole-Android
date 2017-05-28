@@ -65,6 +65,13 @@ public class MessagesListFragment extends Fragment implements MessagesListContra
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        mPresenter.destroy();
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.action_messages_list, menu);
     }

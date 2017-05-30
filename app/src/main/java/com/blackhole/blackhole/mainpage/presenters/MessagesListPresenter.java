@@ -29,10 +29,10 @@ public class MessagesListPresenter implements MessagesListContract.Presenter {
      */
     private LinkedList<Disposable> mOnDestroyDisposables = new LinkedList<>();
 
-    public MessagesListPresenter(IUsersRepository ur, IMessagesRepository mr, MessagesListContract.View v) {
-        mUserRepository = ur;
-        mMessageRepository = mr;
-        mView = v;
+    public MessagesListPresenter(IUsersRepository usersRepository, IMessagesRepository messagesRepository, MessagesListContract.View view) {
+        mUserRepository = usersRepository;
+        mMessageRepository = messagesRepository;
+        mView = view;
     }
 
     @Override

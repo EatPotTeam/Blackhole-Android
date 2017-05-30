@@ -19,14 +19,14 @@ import io.reactivex.schedulers.Schedulers;
 class MessagesRepository implements IMessagesRepository {
     private static MessagesRepository sInstance;
 
+    private MessagesRepository() {}
+
     static MessagesRepository getInstance() {
         if (sInstance == null) {
             sInstance = new MessagesRepository();
         }
         return sInstance;
     }
-
-    private MessagesRepository() {}
 
     // NOTE: Should handle thread scheduling!!!
     @Override

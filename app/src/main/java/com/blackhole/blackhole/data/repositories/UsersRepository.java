@@ -12,14 +12,14 @@ import io.reactivex.Observable;
 class UsersRepository implements IUsersRepository {
     private static UsersRepository sInstance;
 
+    private UsersRepository() {}
+
     static UsersRepository getInstance() {
         if (sInstance == null) {
             sInstance = new UsersRepository();
         }
         return sInstance;
     }
-
-    private UsersRepository() {}
 
     @Override
     public Observable<String> requestNewUserId() {

@@ -33,4 +33,14 @@ class UsersRepository implements IUsersRepository {
     public Observable<Object> refreshLastActiveTime(String userId) {
         return null;
     }
+
+    @Override
+    public String setUserNickname() {
+        return null;
+    }
+
+    @Override
+    public String getUserNickname() {
+        return null;
+    }
 }

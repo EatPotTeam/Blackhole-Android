@@ -13,4 +13,8 @@ public interface IUsersRepository {
     String getUserId();
 
     Observable<Object> refreshLastActiveTime(String userId);
+
+    String setUserNickname();
+
+    String getUserNickname();
 }

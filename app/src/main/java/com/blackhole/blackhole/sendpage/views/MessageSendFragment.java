@@ -80,7 +80,7 @@ public class MessageSendFragment extends Fragment implements MessageSendContract
 
     @Override
     public void showErrorToast(String errorText) {
-        Toast.makeText(this.getActivity(), errorText, Toast.LENGTH_SHORT);
+        Toast.makeText(this.getActivity(), errorText, Toast.LENGTH_SHORT).show();
     }
 
     @Override

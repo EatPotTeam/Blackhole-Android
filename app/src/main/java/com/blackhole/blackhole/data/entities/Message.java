@@ -10,6 +10,8 @@ public class Message {
     private String content;
     private long createdTime;
 
+    public Message() {}
+
     public String getNickname() {
         return nickname;
     }

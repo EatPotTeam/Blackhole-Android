@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
 import com.blackhole.blackhole.R;
 import com.blackhole.blackhole.data.repositories.Repo;
@@ -22,8 +23,9 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show());
+        /*fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show());*/
+        fab.setOnClickListener(view -> Toast.makeText(this, "Hello", Toast.LENGTH_SHORT).show());
 
         FragmentManager fm = getSupportFragmentManager();
         MessagesListFragment messagesListFragment = (MessagesListFragment) fm.findFragmentById(R.id.frameLayout_fragmentContainer);

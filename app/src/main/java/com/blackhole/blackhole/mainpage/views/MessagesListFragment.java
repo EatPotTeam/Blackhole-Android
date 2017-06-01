@@ -4,6 +4,7 @@ package com.blackhole.blackhole.mainpage.views;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -24,11 +25,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MessagesListFragment extends Fragment implements MessagesListContract.View {
-    private MessagesListRecyclerAdapter mMessagesListRecyclerAdapter;
+    private MessagesListRecyclerAdapter mAdapter;
     private MessagesListContract.Presenter mPresenter;
-
     @BindView(R.id.recyclerView_messagesList)
-    RecyclerView mMessagesListRecyclerView;
+    RecyclerView mRecyclerView;
 
     public MessagesListFragment() {
         // Required empty public constructor
@@ -42,7 +42,7 @@ public class MessagesListFragment extends Fragment implements MessagesListContra
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mMessagesListRecyclerAdapter = new MessagesListRecyclerAdapter();
+        mAdapter = new MessagesListRecyclerAdapter();
 
         setHasOptionsMenu(true);
     }
@@ -58,8 +58,9 @@ public class MessagesListFragment extends Fragment implements MessagesListContra
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
 
-        mMessagesListRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        mMessagesListRecyclerView.setAdapter(mMessagesListRecyclerAdapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.HORIZONTAL));
 
         mPresenter.viewCreated();
     }
@@ -101,6 +102,6 @@ public class MessagesListFragment extends Fragment implements MessagesListContra
 
     @Override
     public void appendMessages(ArrayList<Message> messages) {
-        mMessagesListRecyclerAdapter.appendMessages(messages);
+        mAdapter.appendMessages(messages);
     }
 }

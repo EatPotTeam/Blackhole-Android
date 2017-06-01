@@ -1,10 +1,11 @@
 package com.blackhole.blackhole.mainpage.views;
 
-
+import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DividerItemDecoration;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import com.blackhole.blackhole.R;
 import com.blackhole.blackhole.data.entities.Message;
 import com.blackhole.blackhole.mainpage.contracts.MessagesListContract;
 import com.blackhole.blackhole.mainpage.ui.MessagesListRecyclerAdapter;
+import com.blackhole.blackhole.util.CustomDivider;
 
 import java.util.ArrayList;
 
@@ -58,9 +60,15 @@ public class MessagesListFragment extends Fragment implements MessagesListContra
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
+
+        Drawable drawable = ContextCompat.getDrawable(getActivity(), R.drawable.divider);
+        Point size = new Point();
+        getActivity().getWindowManager().getDefaultDisplay().getSize(size);
+        mRecyclerView.addItemDecoration(new CustomDivider(drawable, size.x));
+
         mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.HORIZONTAL));
 
         mPresenter.viewCreated();
     }

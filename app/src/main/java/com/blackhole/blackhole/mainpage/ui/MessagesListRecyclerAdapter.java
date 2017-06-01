@@ -9,8 +9,6 @@ import android.widget.TextView;
 import com.blackhole.blackhole.R;
 import com.blackhole.blackhole.data.entities.Message;
 
-import org.joda.time.LocalDateTime;
-
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -36,7 +34,7 @@ public class MessagesListRecyclerAdapter extends RecyclerView.Adapter<MessagesLi
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        //return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_messages_list, parent, false));
+        // return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_messages_list, parent, false));
         return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_message, parent, false));
     }
 

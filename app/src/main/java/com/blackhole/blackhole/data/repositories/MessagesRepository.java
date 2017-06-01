@@ -1,6 +1,7 @@
 package com.blackhole.blackhole.data.repositories;
 
 import com.blackhole.blackhole.data.entities.Message;
+import com.blackhole.blackhole.data.retrofit.BlackholeService;
 import com.blackhole.blackhole.framework.RxResult;
 
 import java.util.ArrayList;
@@ -10,6 +11,9 @@ import java.util.concurrent.TimeUnit;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Author: perqin
@@ -19,13 +23,21 @@ import io.reactivex.schedulers.Schedulers;
 class MessagesRepository implements IMessagesRepository {
     private static MessagesRepository sInstance;
 
-    private MessagesRepository() {}
+    private final BlackholeService mService;
 
     static MessagesRepository getInstance() {
         if (sInstance == null) {
             sInstance = new MessagesRepository();
         }
         return sInstance;
+    }
+
+    private MessagesRepository() {
+        mService = new Retrofit.Builder()
+                .baseUrl(BlackholeService.API_HOST)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build().create(BlackholeService.class);
     }
 
     // NOTE: Should handle thread scheduling!!!
@@ -51,20 +63,15 @@ class MessagesRepository implements IMessagesRepository {
     }
 
     /**
-     * This is just a mock method for Retrofit Service
+     * This is a wrapper method for Retrofit Service
      * @param userId The user ID
-     * @return Observable which emits three new messages or an error
+     * @return Observable which emits new messages or an error
      */
     private Observable<RxResult<ArrayList<Message>>> remoteFetchNewMessages(String userId) {
-        ArrayList<Message> messages = new ArrayList<>();
-        Random random = new Random();
-        if (random.nextBoolean()) {
-            messages.add(new Message());
-            messages.add(new Message());
-            messages.add(new Message());
-            return Observable.just(RxResult.result(messages));
-        } else {
-            return Observable.just(RxResult.error(new Error("Failed to fetch new messages: Random Error")));
-        }
+        return mService.getLatestMessage(userId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(RxResult::result)
+                .onErrorReturn(RxResult::error);
     }
 }

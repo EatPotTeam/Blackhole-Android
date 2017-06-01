@@ -1,5 +1,6 @@
 package com.blackhole.blackhole.data.retrofit;
 
+import com.blackhole.blackhole.BuildConfig;
 import com.blackhole.blackhole.data.entities.Message;
 
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Author: perqin
@@ -16,9 +18,14 @@ import retrofit2.http.Path;
  */
 
 public interface BlackholeService {
-    @GET("pull/{id}")
-    Observable<ArrayList<Message>> getLatestMessage(@Path("id") String userId);
+    String API_HOST = BuildConfig.API_HOST;
 
-    @POST("submit")
-    Observable<Object> sendMessage(@Body Message message);
+    @POST("login/{id}")
+    Observable<Object> updateLastOnlineTime(@Path("id") String userId);
+
+    @POST("messages")
+    Observable<Message> sendMessage(@Body Message message);
+
+    @GET("messages")
+    Observable<ArrayList<Message>> getLatestMessage(@Query("userId") String userId);
 }

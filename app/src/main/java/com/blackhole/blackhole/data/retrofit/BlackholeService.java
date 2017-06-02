@@ -2,6 +2,7 @@ package com.blackhole.blackhole.data.retrofit;
 
 import com.blackhole.blackhole.BuildConfig;
 import com.blackhole.blackhole.data.entities.Message;
+import com.blackhole.blackhole.data.entities.User;
 
 import java.util.ArrayList;
 
@@ -20,12 +21,15 @@ import retrofit2.http.Query;
 public interface BlackholeService {
     String API_HOST = BuildConfig.API_HOST;
 
+    @POST("register")
+    Observable<User> createUser();
+
     @POST("login/{id}")
     Observable<Object> updateLastOnlineTime(@Path("id") String userId);
 
-    @POST("messages")
-    Observable<Message> sendMessage(@Body Message message);
-
     @GET("messages")
     Observable<ArrayList<Message>> getLatestMessage(@Query("userId") String userId);
+
+    @POST("messages")
+    Observable<Message> sendMessage(@Body Message message);
 }

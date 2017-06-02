@@ -1,5 +1,8 @@
 package com.blackhole.blackhole.data.repositories;
 
+import com.blackhole.blackhole.data.entities.User;
+import com.blackhole.blackhole.framework.RxResult;
+
 import io.reactivex.Observable;
 
 /**
@@ -8,7 +11,7 @@ import io.reactivex.Observable;
  */
 
 public interface IUsersRepository {
-    Observable<String> requestNewUserId();
+    Observable<RxResult<User>> requestNewUserId();
 
     String getUserId();
 

@@ -13,7 +13,10 @@ import io.reactivex.Observable;
  */
 
 public interface IMessagesRepository {
+    @Deprecated
     Observable<ArrayList<Message>> fetchNewMessages(String userId);
 
     Observable<RxResult<ArrayList<Message>>> startFetchingNewMessages(String userId);
+
+    Observable<RxResult<Message>> sendMessage(Message message);
 }

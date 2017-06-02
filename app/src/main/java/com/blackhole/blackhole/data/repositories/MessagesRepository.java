@@ -1,6 +1,7 @@
 package com.blackhole.blackhole.data.repositories;
 
 import com.blackhole.blackhole.data.entities.Message;
+import com.blackhole.blackhole.data.retrofit.ApiFactory;
 import com.blackhole.blackhole.data.retrofit.BlackholeService;
 import com.blackhole.blackhole.framework.RxResult;
 
@@ -11,9 +12,6 @@ import java.util.concurrent.TimeUnit;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Author: perqin
@@ -33,11 +31,7 @@ class MessagesRepository implements IMessagesRepository {
     }
 
     private MessagesRepository() {
-        mService = new Retrofit.Builder()
-                .baseUrl(BlackholeService.API_HOST)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build().create(BlackholeService.class);
+        mService = ApiFactory.blackhole();
     }
 
     // NOTE: Should handle thread scheduling!!!
@@ -60,6 +54,14 @@ class MessagesRepository implements IMessagesRepository {
         return Observable.interval(0, 1, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .concatMap(aLong -> remoteFetchNewMessages(userId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()));
+    }
+
+    @Override
+    public Observable<RxResult<Message>> sendMessage(Message message) {
+        return mService.sendMessage(message)
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .map(RxResult::result)
+                .onErrorReturn(RxResult::error);
     }
 
     /**

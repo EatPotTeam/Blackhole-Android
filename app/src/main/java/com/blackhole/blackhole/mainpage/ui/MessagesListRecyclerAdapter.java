@@ -9,8 +9,6 @@ import android.widget.TextView;
 import com.blackhole.blackhole.R;
 import com.blackhole.blackhole.data.entities.Message;
 
-import org.joda.time.LocalDateTime;
-
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -36,14 +34,18 @@ public class MessagesListRecyclerAdapter extends RecyclerView.Adapter<MessagesLi
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_messages_list, parent, false));
+        // return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_messages_list, parent, false));
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_message, parent, false));
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.nicknameTextView.setText(mDataSet.get(position).getNickname());
-        holder.createdTimeTextView.setText(new LocalDateTime(mDataSet.get(position).getCreatedTime()).toString("yyyy/MM/dd HH:mm:ss"));
-        holder.contentTextView.setText(mDataSet.get(position).getContent());
+        // holder.nicknameTextView.setText(mDataSet.get(position).getNickname());
+        holder.nicknameTextView.setText(R.string.nickname);
+        // holder.createdTimeTextView.setText(new LocalDateTime(mDataSet.get(position).getCreatedTime()).toString("yyyy/MM/dd HH:mm:ss"));
+        holder.createdTimeTextView.setText(R.string.sent_time);
+        // holder.contentTextView.setText(mDataSet.get(position).getContent());
+        holder.contentTextView.setText(R.string.content_example);
     }
 
     @Override
@@ -52,11 +54,14 @@ public class MessagesListRecyclerAdapter extends RecyclerView.Adapter<MessagesLi
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.textView_nickname)
+        //@BindView(R.id.textView_nickname)
+        @BindView(R.id.message_nickname)
         TextView nicknameTextView;
-        @BindView(R.id.textView_createdTime)
+        //@BindView(R.id.textView_createdTime)
+        @BindView(R.id.message_sent_time)
         TextView createdTimeTextView;
-        @BindView(R.id.textView_content)
+        //@BindView(R.id.textView_content)
+        @BindView(R.id.message_content)
         TextView contentTextView;
 
         ViewHolder(View itemView) {

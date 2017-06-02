@@ -44,7 +44,7 @@ public class MessagesListPresenter implements MessagesListContract.Presenter {
                     .flatMap(o -> mMessageRepository.startFetchingNewMessages(mUserRepository.getUserId()))
                     .subscribe(arrayListRxResult -> {
                         if (arrayListRxResult.isError()) {
-                            Log.w(TAG, "viewCreated: Failed to fetch some message");
+                            Log.w(TAG, "viewCreated: Failed to fetch some item_message");
                             mView.showFailToFetchMessagesError();
                             return;
                         }

@@ -1,9 +1,11 @@
 package com.blackhole.blackhole.mainpage.views;
 
-
+import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,6 +19,7 @@ import com.blackhole.blackhole.R;
 import com.blackhole.blackhole.data.entities.Message;
 import com.blackhole.blackhole.mainpage.contracts.MessagesListContract;
 import com.blackhole.blackhole.mainpage.ui.MessagesListRecyclerAdapter;
+import com.blackhole.blackhole.util.CustomDivider;
 
 import java.util.ArrayList;
 
@@ -24,11 +27,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MessagesListFragment extends Fragment implements MessagesListContract.View {
-    private MessagesListRecyclerAdapter mMessagesListRecyclerAdapter;
+    private MessagesListRecyclerAdapter mAdapter;
     private MessagesListContract.Presenter mPresenter;
-
     @BindView(R.id.recyclerView_messagesList)
-    RecyclerView mMessagesListRecyclerView;
+    RecyclerView mRecyclerView;
 
     public MessagesListFragment() {
         // Required empty public constructor
@@ -42,7 +44,7 @@ public class MessagesListFragment extends Fragment implements MessagesListContra
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mMessagesListRecyclerAdapter = new MessagesListRecyclerAdapter();
+        mAdapter = new MessagesListRecyclerAdapter();
 
         setHasOptionsMenu(true);
     }
@@ -58,8 +60,15 @@ public class MessagesListFragment extends Fragment implements MessagesListContra
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
 
-        mMessagesListRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        mMessagesListRecyclerView.setAdapter(mMessagesListRecyclerAdapter);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
+
+        Drawable drawable = ContextCompat.getDrawable(getActivity(), R.drawable.divider);
+        Point size = new Point();
+        getActivity().getWindowManager().getDefaultDisplay().getSize(size);
+        mRecyclerView.addItemDecoration(new CustomDivider(drawable, size.x));
+
+        mRecyclerView.setAdapter(mAdapter);
 
         mPresenter.viewCreated();
     }
@@ -101,6 +110,6 @@ public class MessagesListFragment extends Fragment implements MessagesListContra
 
     @Override
     public void appendMessages(ArrayList<Message> messages) {
-        mMessagesListRecyclerAdapter.appendMessages(messages);
+        mAdapter.appendMessages(messages);
     }
 }

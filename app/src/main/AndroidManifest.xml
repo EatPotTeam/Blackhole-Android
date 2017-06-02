@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.blackhole.blackhole">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <!-- NOTE: allowBackup is set to false temporarily, as it is not our main goal so far -->
     <!-- NOTE: Google App Indexing missing warning is ignored temporarily, as it is not our main goal so far -->
     <application

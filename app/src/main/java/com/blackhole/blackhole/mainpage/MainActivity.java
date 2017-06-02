@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
             messagesListFragment = MessagesListFragment.newInstance();
             fm.beginTransaction().add(R.id.frameLayout_fragmentContainer, messagesListFragment).commit();
         }
-        MessagesListContract.Presenter presenter = new MessagesListPresenter(Repo.getUsersRepo(), Repo.getMessagesRepo(), messagesListFragment);
+        MessagesListContract.Presenter presenter = new MessagesListPresenter(Repo.getUsersRepo(this), Repo.getMessagesRepo(), messagesListFragment);
         messagesListFragment.setPresenter(presenter);
     }
 }

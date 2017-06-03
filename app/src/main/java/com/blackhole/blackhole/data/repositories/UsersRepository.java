@@ -60,4 +60,14 @@ class UsersRepository implements IUsersRepository {
     private void saveUserIdToLocal(User user) {
         mSp.edit().putString(PK_USER_ID, user.getId()).apply();
     }
+
+    @Override
+    public String setUserNickname() {
+        return null;
+    }
+
+    @Override
+    public String getUserNickname() {
+        return null;
+    }
 }

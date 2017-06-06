@@ -12,4 +12,5 @@
     <string name="sent_time">Sent Time</string>
     <string name="message_content">Content</string>
     <string name="content_example">This is an example of content text, which shows the effect of displaying a large amount of text.\n这是一段文本样例，用来展示大段文本的显示效果。</string>
+    <string name="send_page_editor_hint">Edit Here</string>
 </resources>

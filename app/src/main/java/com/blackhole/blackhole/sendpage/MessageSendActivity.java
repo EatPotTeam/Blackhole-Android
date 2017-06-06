@@ -29,7 +29,7 @@ public class MessageSendActivity extends AppCompatActivity {
             messageSendFragment = MessageSendFragment.newInstance();
             fm.beginTransaction().add(R.id.frameLayout_send_page_fragmentContainer, messageSendFragment).commit();
         }
-        MessageSendContract.Presenter presenter = new MessageSendPresenter(Repo.getUsersRepo(), messageSendFragment);
+        MessageSendContract.Presenter presenter = new MessageSendPresenter(Repo.getUsersRepo(this), Repo.getMessagesRepo(), messageSendFragment);
         messageSendFragment.setPresenter(presenter);
     }
 }

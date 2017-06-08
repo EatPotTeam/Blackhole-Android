@@ -9,4 +9,6 @@
     <color name="colorSpeaker">#373737</color>
     <color name="colorSentTime">#8e8e8e</color>
     <color name="colorContent">#616161</color>
+
+    <color name="colorButton">#B0BEC5</color>
 </resources>

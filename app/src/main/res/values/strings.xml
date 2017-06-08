@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Blackhole</string>
     <string name="send_page_name">Send Message</string>
+    <string name="login_name">Login</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -13,4 +14,7 @@
     <string name="message_content">Content</string>
     <string name="content_example">This is an example of content text, which shows the effect of displaying a large amount of text.\n这是一段文本样例，用来展示大段文本的显示效果。</string>
     <string name="send_page_editor_hint">Edit Here</string>
+
+    <string name="login_hint">Input nickname here</string>
+    <string name="login_button">Login</string>
 </resources>

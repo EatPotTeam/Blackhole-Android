@@ -28,7 +28,7 @@
                 android:id="@+id/login_nickname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/register_hint" />
+                android:hint="@string/login_hint" />
         </android.support.design.widget.TextInputLayout>
 
         <Button

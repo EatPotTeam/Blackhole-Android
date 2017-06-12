@@ -14,5 +14,8 @@ public interface LoginContract {
 
     interface View extends BaseView<Presenter>{
 
+        void showErrorToast(String s);
+
+        void finishLogin();
     }
 }

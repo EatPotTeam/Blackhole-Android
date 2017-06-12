@@ -1,5 +1,6 @@
 package com.blackhole.blackhole.mainpage.views;
 
+import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 
 import com.blackhole.blackhole.R;
 import com.blackhole.blackhole.data.entities.Message;
+import com.blackhole.blackhole.loginpage.LoginActivity;
 import com.blackhole.blackhole.mainpage.contracts.MessagesListContract;
 import com.blackhole.blackhole.mainpage.ui.MessagesListRecyclerAdapter;
 import com.blackhole.blackhole.util.CustomDivider;
@@ -87,7 +89,13 @@ public class MessagesListFragment extends Fragment implements MessagesListContra
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
+        switch(item.getItemId()) {
+            case R.id.action_change_nickname:
+                Intent intent = new Intent(this.getActivity(), LoginActivity.class);
+                this.getActivity().startActivityForResult(intent, 0);
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

@@ -16,7 +16,7 @@
             android:layout_height="?attr/actionBarSize"
             android:id="@+id/register_toolbar"
             android:background="?attr/colorPrimary"
-            app:title="@string/register_name"
+            app:title="@string/login_name"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>

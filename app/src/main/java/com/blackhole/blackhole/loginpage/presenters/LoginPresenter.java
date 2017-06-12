@@ -25,17 +25,21 @@ public class LoginPresenter implements LoginContract.Presenter{
 
     @Override
     public void login(String nickname) {
-        //mUserRepository.setUserNickname(nickname);
-        // TODO; finish login 
+        if (nickname.isEmpty()) {
+            mView.showErrorToast("Empty nickname");
+            return;
+        }
+        mUserRepository.setNickname(nickname);
         mUserRepository.requestNewUserId()
                 .subscribe(userRxResult -> {
                     if (userRxResult.isError()) {
                         Log.w(TAG, userRxResult.toString());
+                        mView.showErrorToast("Set nickname fail, try again");
                     } else {
-
+                        mView.finishLogin();
                     }
                 }, throwable -> {
-
+                    Log.w(TAG, "Network fail", throwable);
                 });
 
     }

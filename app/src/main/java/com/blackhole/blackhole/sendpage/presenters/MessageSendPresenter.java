@@ -33,13 +33,12 @@ public class MessageSendPresenter implements MessageSendContract.Presenter {
             mView.showErrorToast(RC.EDITOR_EMPTY_TEXT);
             return;
         }
-        String nickname = mUserRepository.getUserNickname();
+        String nickname = mUserRepository.getNickname();
 
         Message mes = new Message();
         mes.setContent(message);
-        mes.setNickname("test");
-        Disposable disposable = mUserRepository.refreshLastActiveTime()
-                .flatMap(o ->  mMessagesRepository.sendMessage(mes))
+        mes.setNickname(nickname);
+        Disposable disposable = mMessagesRepository.sendMessage(mes)
                 .subscribe(messageRxResult -> {
                     if (messageRxResult.isError()) {
                         Log.w(TAG, "message send fail");

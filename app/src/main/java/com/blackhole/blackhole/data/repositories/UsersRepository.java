@@ -20,6 +20,7 @@ import io.reactivex.schedulers.Schedulers;
 
 class UsersRepository implements IUsersRepository {
     private static final String PK_USER_ID = "USER_ID";
+    private static final String PK_USER_NICKNAME = "USER_NICKNAME";
 
     private static UsersRepository sInstance;
 
@@ -57,17 +58,17 @@ class UsersRepository implements IUsersRepository {
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
+    @Override
+    public void setNickname(String nickname) {
+        mSp.edit().putString(PK_USER_NICKNAME, nickname).apply();
+    }
+
+    @Override
+    public String getNickname() {
+        return mSp.getString(PK_USER_NICKNAME, "");
+    }
+
     private void saveUserIdToLocal(User user) {
         mSp.edit().putString(PK_USER_ID, user.getId()).apply();
-    }
-
-    @Override
-    public String setUserNickname() {
-        return null;
-    }
-
-    @Override
-    public String getUserNickname() {
-        return null;
     }
 }

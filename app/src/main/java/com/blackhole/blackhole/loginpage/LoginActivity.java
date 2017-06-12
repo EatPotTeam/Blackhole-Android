@@ -25,7 +25,7 @@ public class LoginActivity extends AppCompatActivity{
         LoginFragment registerFragment = (LoginFragment) fm.findFragmentById(R.id.frameLayout_login_fragmentContainer);
         if(registerFragment == null) {
             registerFragment = LoginFragment.newInstance();
-            fm.beginTransaction().add(R.id.frameLayout_send_page_fragmentContainer, registerFragment).commit();
+            fm.beginTransaction().add(R.id.frameLayout_login_fragmentContainer, registerFragment).commit();
         }
         LoginContract.Presenter presenter = new LoginPresenter(Repo.getUsersRepo(this), Repo.getMessagesRepo(), registerFragment);
         registerFragment.setPresenter(presenter);

@@ -14,8 +14,11 @@ import android.widget.Toast;
 
 import com.blackhole.blackhole.R;
 import com.blackhole.blackhole.loginpage.contracts.LoginContract;
+import com.blackhole.blackhole.mainpage.MainActivity;
 
 public class LoginFragment extends Fragment  implements LoginContract.View, View.OnClickListener {
+    public static final String EXTRA_IS_CHANGING_NICKNAME = "IS_CHANGING_NICKNAME";
+
     private LoginContract.Presenter mPresenter;
     private EditText nickname;
     private Button mButton;
@@ -31,8 +34,6 @@ public class LoginFragment extends Fragment  implements LoginContract.View, View
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
     }
 
     @Override
@@ -45,9 +46,15 @@ public class LoginFragment extends Fragment  implements LoginContract.View, View
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        boolean isChangingNickname = getActivity().getIntent().getBooleanExtra(EXTRA_IS_CHANGING_NICKNAME, false);
+
         nickname = (EditText)view.findViewById(R.id.login_nickname);
         mButton = (Button)view.findViewById(R.id.login_button);
+        mButton.setText(isChangingNickname ? R.string.change_button : R.string.login_button);
         mButton.setOnClickListener(this);
+
+        mPresenter.viewCreated(isChangingNickname);
     }
 
     @Override
@@ -59,7 +66,7 @@ public class LoginFragment extends Fragment  implements LoginContract.View, View
     public void onClick(View v) {
         switch(v.getId()) {
             case R.id.login_button:
-                mPresenter.login(nickname.getText().toString());
+                mPresenter.loginOrChangeNickname(nickname.getText().toString());
                 break;
             default:
                 break;
@@ -73,8 +80,13 @@ public class LoginFragment extends Fragment  implements LoginContract.View, View
 
     @Override
     public void finishLogin() {
-        Intent data = new Intent();
-        this.getActivity().setResult(Activity.RESULT_OK, data);
-        this.getActivity().finish();
+        getActivity().startActivity(new Intent(this.getActivity(), MainActivity.class));
+        getActivity().finish();
+    }
+
+    @Override
+    public void finishChangingNickname() {
+        getActivity().setResult(Activity.RESULT_OK);
+        getActivity().finish();
     }
 }

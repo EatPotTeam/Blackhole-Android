@@ -37,7 +37,7 @@ public class MessagesListPresenter implements MessagesListContract.Presenter {
 
     @Override
     public void viewCreated() {
-        if (mUserRepository.getUserId() == null) {
+        if (("").equals(mUserRepository.getUserId())) {
             mView.switchToNicknamePage();
         } else {
             Disposable disposable = mUserRepository.refreshLastActiveTime()
@@ -51,6 +51,7 @@ public class MessagesListPresenter implements MessagesListContract.Presenter {
                         mView.appendMessages(arrayListRxResult.result());
                     }, throwable -> {
                         Log.w(TAG, "viewCreated: Failed to fetch", throwable);
+                        Log.d(TAG, "viewCreated: User id = " + mUserRepository.getUserId());
                         mView.showFailToBeOnlineError();
                     });
             mOnDestroyDisposables.add(disposable);

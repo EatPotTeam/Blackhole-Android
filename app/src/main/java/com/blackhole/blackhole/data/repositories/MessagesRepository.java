@@ -1,5 +1,6 @@
 package com.blackhole.blackhole.data.repositories;
 
+import com.blackhole.blackhole.BuildConfig;
 import com.blackhole.blackhole.data.entities.Message;
 import com.blackhole.blackhole.data.retrofit.ApiFactory;
 import com.blackhole.blackhole.data.retrofit.BlackholeService;
@@ -51,7 +52,8 @@ class MessagesRepository implements IMessagesRepository {
 
     @Override
     public Observable<RxResult<ArrayList<Message>>> startFetchingNewMessages(String userId) {
-        return Observable.interval(0, 1, TimeUnit.SECONDS)
+        // If in debug variant, poll every 10 seconds.
+        return Observable.interval(0, BuildConfig.DEBUG ? 10 : 30, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .concatMap(aLong -> remoteFetchNewMessages(userId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()));
     }

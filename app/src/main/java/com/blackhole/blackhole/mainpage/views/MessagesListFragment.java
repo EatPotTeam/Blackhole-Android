@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import com.blackhole.blackhole.R;
 import com.blackhole.blackhole.data.entities.Message;
 import com.blackhole.blackhole.loginpage.LoginActivity;
+import com.blackhole.blackhole.loginpage.views.LoginFragment;
 import com.blackhole.blackhole.mainpage.contracts.MessagesListContract;
 import com.blackhole.blackhole.mainpage.ui.MessagesListRecyclerAdapter;
 import com.blackhole.blackhole.util.CustomDivider;
@@ -92,6 +93,7 @@ public class MessagesListFragment extends Fragment implements MessagesListContra
         switch(item.getItemId()) {
             case R.id.action_change_nickname:
                 Intent intent = new Intent(this.getActivity(), LoginActivity.class);
+                intent.putExtra(LoginFragment.EXTRA_IS_CHANGING_NICKNAME, true);
                 this.getActivity().startActivityForResult(intent, 0);
             default:
                 return super.onOptionsItemSelected(item);
@@ -105,6 +107,7 @@ public class MessagesListFragment extends Fragment implements MessagesListContra
 
     @Override
     public void switchToNicknamePage() {
+        getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
         getActivity().finish();
     }
 

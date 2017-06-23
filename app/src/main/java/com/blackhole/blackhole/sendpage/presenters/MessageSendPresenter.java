@@ -2,7 +2,7 @@ package com.blackhole.blackhole.sendpage.presenters;
 
 import android.util.Log;
 
-import com.blackhole.blackhole.common.RC;
+import com.blackhole.blackhole.common.CommonFactory;
 import com.blackhole.blackhole.data.entities.Message;
 import com.blackhole.blackhole.data.repositories.IMessagesRepository;
 import com.blackhole.blackhole.data.repositories.IUsersRepository;
@@ -20,22 +20,23 @@ public class MessageSendPresenter implements MessageSendContract.Presenter {
     private IUsersRepository mUserRepository;
     private IMessagesRepository mMessagesRepository;
     private MessageSendContract.View mView;
+    private Message mes;
 
     public MessageSendPresenter(IUsersRepository ur, IMessagesRepository mr, MessageSendContract.View view) {
         mUserRepository = ur;
         mMessagesRepository = mr;
         mView = view;
+        mes = new Message();
     }
 
     @Override
     public void sendMessage(String message) {
         if (message.length() == 0) {
-            mView.showErrorToast(RC.EDITOR_EMPTY_TEXT);
+            mView.showErrorToast(CommonFactory.EDITOR_EMPTY_TEXT);
             return;
         }
         String nickname = mUserRepository.getNickname();
 
-        Message mes = new Message();
         mes.setContent(message);
         mes.setNickname(nickname);
         Disposable disposable = mMessagesRepository.sendMessage(mes)
@@ -50,5 +51,11 @@ public class MessageSendPresenter implements MessageSendContract.Presenter {
                     mView.showErrorToast("Network problem");
                 });
         //disposable.dispose();
+    }
+
+    @Override
+    public void setColor(int color) {
+        mes.setColor(color);
+        mView.setEditorColor(color);
     }
 }

@@ -14,11 +14,15 @@ public interface MessageSendContract {
          * @param message message in editor
          */
         void sendMessage(String message);
+
+        void setColor(int id);
     }
 
     interface View extends BaseView<Presenter> {
         void showErrorToast(String errorText);
 
         void successReturn();
+
+        void setEditorColor(int color);
     }
 }

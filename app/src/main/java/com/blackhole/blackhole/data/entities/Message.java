@@ -9,6 +9,7 @@ public class Message {
     private String nickname;
     private String content;
     private long createdTime;
+    private int color;
 
     public Message() {}
 
@@ -34,5 +35,13 @@ public class Message {
 
     public void setCreatedTime(long createdTime) {
         this.createdTime = createdTime;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
+    }
+
+    public int getColor() {
+        return color;
     }
 }

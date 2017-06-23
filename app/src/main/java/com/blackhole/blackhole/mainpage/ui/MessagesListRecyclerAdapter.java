@@ -1,5 +1,6 @@
 package com.blackhole.blackhole.mainpage.ui;
 
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,12 @@ import butterknife.ButterKnife;
 
 public class MessagesListRecyclerAdapter extends RecyclerView.Adapter<MessagesListRecyclerAdapter.ViewHolder> {
     private ArrayList<Message> mDataSet = new ArrayList<>();
+    private OnItemClickListener mListener;
+    private String mSessionId;
+
+    public void setListener(OnItemClickListener listener) {
+        mListener = listener;
+    }
 
     public void prependMessages(ArrayList<Message> messages) {
         mDataSet.addAll(0, messages);
@@ -34,18 +41,23 @@ public class MessagesListRecyclerAdapter extends RecyclerView.Adapter<MessagesLi
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        // return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_messages_list, parent, false));
         return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_message, parent, false));
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        // holder.nicknameTextView.setText(mDataSet.get(position).getNickname());
-        holder.nicknameTextView.setText(R.string.nickname);
-        // holder.createdTimeTextView.setText(new LocalDateTime(mDataSet.get(position).getCreatedTime()).toString("yyyy/MM/dd HH:mm:ss"));
-        holder.createdTimeTextView.setText(R.string.sent_time);
-        // holder.contentTextView.setText(mDataSet.get(position).getContent());
-        holder.contentTextView.setText(R.string.content_example);
+        holder.itemView.setOnLongClickListener(v -> {
+            if (mListener != null) {
+                mListener.onItemClick(mDataSet.get(holder.getAdapterPosition()));
+            }
+            return true;
+        });
+        holder.itemView.setBackgroundColor(mSessionId != null && mSessionId.equals(mDataSet.get(position).getReply())
+                ? ContextCompat.getColor(holder.itemView.getContext(), R.color.colorMessageBackgroundLinked)
+                : ContextCompat.getColor(holder.itemView.getContext(), R.color.colorMessageBackground));
+        holder.nicknameTextView.setText(mDataSet.get(position).getNickname());
+        holder.createdTimeTextView.setText(" ");
+        holder.contentTextView.setText(mDataSet.get(position).getContent());
     }
 
     @Override
@@ -53,14 +65,15 @@ public class MessagesListRecyclerAdapter extends RecyclerView.Adapter<MessagesLi
         return mDataSet.size();
     }
 
+    public void setSessionId(String sessionId) {
+        mSessionId = sessionId;
+    }
+
     static class ViewHolder extends RecyclerView.ViewHolder {
-        //@BindView(R.id.textView_nickname)
         @BindView(R.id.message_nickname)
         TextView nicknameTextView;
-        //@BindView(R.id.textView_createdTime)
         @BindView(R.id.message_sent_time)
         TextView createdTimeTextView;
-        //@BindView(R.id.textView_content)
         @BindView(R.id.message_content)
         TextView contentTextView;
 
@@ -69,5 +82,9 @@ public class MessagesListRecyclerAdapter extends RecyclerView.Adapter<MessagesLi
 
             ButterKnife.bind(this, itemView);
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(Message message);
     }
 }

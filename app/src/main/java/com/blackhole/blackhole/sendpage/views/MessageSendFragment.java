@@ -29,9 +29,8 @@ import com.blackhole.blackhole.R;
 import com.blackhole.blackhole.common.CommonFactory;
 import com.blackhole.blackhole.sendpage.contracts.MessageSendContract;
 
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-
 public class MessageSendFragment extends Fragment implements MessageSendContract.View, View.OnClickListener {
+    public static final String EXTRA_LINKED_TO = "LINKED_TO";
     private MessageSendContract.Presenter mPresenter;
     private EditText mEditorText;
     private GridLayout mGridLayout;
@@ -48,8 +47,6 @@ public class MessageSendFragment extends Fragment implements MessageSendContract
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        if (getArguments() != null) {
-        }
     }
 
     @Override
@@ -64,6 +61,7 @@ public class MessageSendFragment extends Fragment implements MessageSendContract
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mEditorText = (EditText) view.findViewById(R.id.send_page_editor);
+        mPresenter.viewCreated(getActivity().getIntent().getStringExtra(EXTRA_LINKED_TO));
         mGridLayout = (GridLayout) view.findViewById(R.id.message_palette);
 
         Point t = new Point();
@@ -76,7 +74,7 @@ public class MessageSendFragment extends Fragment implements MessageSendContract
         int buttonMarginHeight = 8;
         int buttonMarginWidthInPixel = CommonFactory.dip2px(getActivity(), buttonMarginWidth);
         int buttonMarginHeightInPixel = CommonFactory.dip2px(getActivity(), buttonMarginHeight);
-        
+
         int i;
         for (i = 0; i < CommonFactory.ColorPalette.length; i++) {
             Button button = new Button(getActivity());

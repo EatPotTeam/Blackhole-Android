@@ -8,8 +8,9 @@ import com.blackhole.blackhole.framework.BaseView;
 
 public interface LoginContract {
     interface Presenter {
+        void viewCreated(boolean isChangingNickname);
 
-        void login(String nickname);
+        void loginOrChangeNickname(String nickname);
     }
 
     interface View extends BaseView<Presenter>{
@@ -17,5 +18,7 @@ public interface LoginContract {
         void showErrorToast(String s);
 
         void finishLogin();
+
+        void finishChangingNickname();
     }
 }

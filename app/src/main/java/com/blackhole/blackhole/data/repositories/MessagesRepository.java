@@ -1,8 +1,11 @@
 package com.blackhole.blackhole.data.repositories;
 
+import com.blackhole.blackhole.BuildConfig;
+import com.blackhole.blackhole.data.TickObservable;
 import com.blackhole.blackhole.data.entities.Message;
 import com.blackhole.blackhole.data.retrofit.ApiFactory;
 import com.blackhole.blackhole.data.retrofit.BlackholeService;
+import com.blackhole.blackhole.framework.Irrelevant;
 import com.blackhole.blackhole.framework.RxResult;
 
 import java.util.ArrayList;
@@ -22,6 +25,7 @@ class MessagesRepository implements IMessagesRepository {
     private static MessagesRepository sInstance;
 
     private final BlackholeService mService;
+    private TickObservable.Ticker mTicker;
 
     static MessagesRepository getInstance() {
         if (sInstance == null) {
@@ -51,9 +55,13 @@ class MessagesRepository implements IMessagesRepository {
 
     @Override
     public Observable<RxResult<ArrayList<Message>>> startFetchingNewMessages(String userId) {
-        return Observable.interval(0, 1, TimeUnit.SECONDS)
+        // If in debug variant, poll every 10 seconds.
+        return Observable.merge(
+                Observable.interval(0, BuildConfig.DEBUG ? 10 : 30, TimeUnit.SECONDS).map(aLong -> Irrelevant.INSTANCE),
+                new TickObservable(ticker -> mTicker = ticker)
+        )
                 .observeOn(AndroidSchedulers.mainThread())
-                .concatMap(aLong -> remoteFetchNewMessages(userId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()));
+                .concatMap(irrelevant -> remoteFetchNewMessages(userId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()));
     }
 
     @Override
@@ -61,6 +69,8 @@ class MessagesRepository implements IMessagesRepository {
         return mService.sendMessage(message)
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .map(RxResult::result)
+                // Tick immediately after new message sent
+                .doOnNext(messageRxResult -> mTicker.tick())
                 .onErrorReturn(RxResult::error);
     }
 

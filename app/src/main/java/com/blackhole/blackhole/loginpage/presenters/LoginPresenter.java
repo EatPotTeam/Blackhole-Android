@@ -16,6 +16,7 @@ public class LoginPresenter implements LoginContract.Presenter{
     private IUsersRepository mUserRepository;
     private IMessagesRepository mMessagesRepository;
     private LoginContract.View mView;
+    private boolean mIsChangingNickname;
 
     public LoginPresenter(IUsersRepository ur, IMessagesRepository mr, LoginContract.View view) {
         mUserRepository = ur;
@@ -24,23 +25,31 @@ public class LoginPresenter implements LoginContract.Presenter{
     }
 
     @Override
-    public void login(String nickname) {
+    public void viewCreated(boolean isChangingNickname) {
+        mIsChangingNickname = isChangingNickname;
+    }
+
+    @Override
+    public void loginOrChangeNickname(String nickname) {
         if (nickname.isEmpty()) {
             mView.showErrorToast("Empty nickname");
             return;
         }
         mUserRepository.setNickname(nickname);
-        mUserRepository.requestNewUserId()
-                .subscribe(userRxResult -> {
-                    if (userRxResult.isError()) {
-                        Log.w(TAG, userRxResult.toString());
-                        mView.showErrorToast("Set nickname fail, try again");
-                    } else {
-                        mView.finishLogin();
-                    }
-                }, throwable -> {
-                    Log.w(TAG, "Network fail", throwable);
-                });
-
+        if (mIsChangingNickname) {
+            mView.finishChangingNickname();
+        } else {
+            mUserRepository.requestNewUserId()
+                    .subscribe(userRxResult -> {
+                        if (userRxResult.isError()) {
+                            Log.w(TAG, userRxResult.toString());
+                            mView.showErrorToast("Set nickname fail, try again");
+                        } else {
+                            mView.finishLogin();
+                        }
+                    }, throwable -> {
+                        Log.w(TAG, "Network fail", throwable);
+                    });
+        }
     }
 }

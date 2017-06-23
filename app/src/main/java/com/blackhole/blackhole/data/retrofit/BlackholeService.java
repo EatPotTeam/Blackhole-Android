@@ -24,7 +24,7 @@ public interface BlackholeService {
     @POST("register")
     Observable<User> createUser();
 
-    @POST("login/{id}")
+    @GET("login/{id}")
     Observable<Object> updateLastOnlineTime(@Path("id") String userId);
 
     @GET("messages")

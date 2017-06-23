@@ -11,4 +11,7 @@
     <color name="colorContent">#616161</color>
 
     <color name="colorButton">#B0BEC5</color>
+
+    <color name="colorMessageBackground">#F5F5F5</color>
+    <color name="colorMessageBackgroundLinked">#E3F2FD</color>
 </resources>

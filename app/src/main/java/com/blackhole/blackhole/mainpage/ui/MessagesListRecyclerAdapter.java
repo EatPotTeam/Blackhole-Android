@@ -58,6 +58,7 @@ public class MessagesListRecyclerAdapter extends RecyclerView.Adapter<MessagesLi
         holder.nicknameTextView.setText(mDataSet.get(position).getNickname());
         holder.createdTimeTextView.setText(" ");
         holder.contentTextView.setText(mDataSet.get(position).getContent());
+        holder.contentTextView.setTextColor(mDataSet.get(position).getColor());
     }
 
     @Override

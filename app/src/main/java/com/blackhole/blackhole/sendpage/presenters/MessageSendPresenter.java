@@ -28,6 +28,7 @@ public class MessageSendPresenter implements MessageSendContract.Presenter {
         mMessagesRepository = mr;
         mView = view;
         mes = new Message();
+        mes.setColor(0xFF000000);
     }
 
     @Override

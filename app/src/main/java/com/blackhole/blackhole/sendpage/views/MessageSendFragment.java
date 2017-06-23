@@ -112,6 +112,7 @@ public class MessageSendFragment extends Fragment implements MessageSendContract
         switch(item.getItemId()) {
             case android.R.id.home:
                 this.getActivity().finish();
+                return true;
             case R.id.send_page_send_button:
                 String mes = mEditorText.getText().toString();
                 mPresenter.sendMessage(mes);

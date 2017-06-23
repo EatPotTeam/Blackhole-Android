@@ -9,6 +9,8 @@ import com.blackhole.blackhole.data.retrofit.ApiFactory;
 import com.blackhole.blackhole.data.retrofit.BlackholeService;
 import com.blackhole.blackhole.framework.RxResult;
 
+import java.util.UUID;
+
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -26,6 +28,7 @@ class UsersRepository implements IUsersRepository {
 
     private final BlackholeService mService;
     private final SharedPreferences mSp;
+    private String mSessionId;
 
     static UsersRepository getInstance(Context context) {
         if (sInstance == null) {
@@ -66,6 +69,16 @@ class UsersRepository implements IUsersRepository {
     @Override
     public String getNickname() {
         return mSp.getString(PK_USER_NICKNAME, "");
+    }
+
+    @Override
+    public void renewSessionId() {
+        mSessionId = UUID.randomUUID().toString();
+    }
+
+    @Override
+    public String getSessionId() {
+        return mSessionId;
     }
 
     private void saveUserIdToLocal(User user) {

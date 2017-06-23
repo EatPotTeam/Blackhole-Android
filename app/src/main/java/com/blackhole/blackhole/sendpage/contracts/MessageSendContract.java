@@ -3,7 +3,8 @@ package com.blackhole.blackhole.sendpage.contracts;
 import com.blackhole.blackhole.framework.BaseView;
 
 /**
- * Created by YZQ on 2017/5/27.
+ * Author: YZQ
+ * Date  : 2017/5/27
  */
 
 public interface MessageSendContract {
@@ -14,6 +15,8 @@ public interface MessageSendContract {
          * @param message message in editor
          */
         void sendMessage(String message);
+
+        void viewCreated(String linkedTo);
     }
 
     interface View extends BaseView<Presenter> {

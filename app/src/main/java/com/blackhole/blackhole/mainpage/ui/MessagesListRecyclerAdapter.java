@@ -1,5 +1,6 @@
 package com.blackhole.blackhole.mainpage.ui;
 
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,12 @@ import butterknife.ButterKnife;
 
 public class MessagesListRecyclerAdapter extends RecyclerView.Adapter<MessagesListRecyclerAdapter.ViewHolder> {
     private ArrayList<Message> mDataSet = new ArrayList<>();
+    private OnItemClickListener mListener;
+    private String mSessionId;
+
+    public void setListener(OnItemClickListener listener) {
+        mListener = listener;
+    }
 
     public void prependMessages(ArrayList<Message> messages) {
         mDataSet.addAll(0, messages);
@@ -39,6 +46,15 @@ public class MessagesListRecyclerAdapter extends RecyclerView.Adapter<MessagesLi
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        holder.itemView.setOnLongClickListener(v -> {
+            if (mListener != null) {
+                mListener.onItemClick(mDataSet.get(holder.getAdapterPosition()));
+            }
+            return true;
+        });
+        holder.itemView.setBackgroundColor(mSessionId != null && mSessionId.equals(mDataSet.get(position).getSessionId())
+                ? ContextCompat.getColor(holder.itemView.getContext(), R.color.colorMessageBackgroundLinked)
+                : ContextCompat.getColor(holder.itemView.getContext(), R.color.colorMessageBackground));
         holder.nicknameTextView.setText(mDataSet.get(position).getNickname());
         holder.createdTimeTextView.setText(" ");
         holder.contentTextView.setText(mDataSet.get(position).getContent());
@@ -47,6 +63,10 @@ public class MessagesListRecyclerAdapter extends RecyclerView.Adapter<MessagesLi
     @Override
     public int getItemCount() {
         return mDataSet.size();
+    }
+
+    public void setSessionId(String sessionId) {
+        mSessionId = sessionId;
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -62,5 +82,9 @@ public class MessagesListRecyclerAdapter extends RecyclerView.Adapter<MessagesLi
 
             ButterKnife.bind(this, itemView);
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(Message message);
     }
 }

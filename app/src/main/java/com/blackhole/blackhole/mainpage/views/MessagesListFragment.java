@@ -5,6 +5,7 @@ import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,6 +23,8 @@ import com.blackhole.blackhole.loginpage.LoginActivity;
 import com.blackhole.blackhole.loginpage.views.LoginFragment;
 import com.blackhole.blackhole.mainpage.contracts.MessagesListContract;
 import com.blackhole.blackhole.mainpage.ui.MessagesListRecyclerAdapter;
+import com.blackhole.blackhole.sendpage.MessageSendActivity;
+import com.blackhole.blackhole.sendpage.views.MessageSendFragment;
 import com.blackhole.blackhole.util.CustomDivider;
 
 import java.util.ArrayList;
@@ -34,6 +37,9 @@ public class MessagesListFragment extends Fragment implements MessagesListContra
     private MessagesListContract.Presenter mPresenter;
     @BindView(R.id.recyclerView_messagesList)
     RecyclerView mRecyclerView;
+
+    FloatingActionButton mComposeFab;
+    FloatingActionButton mLinkToFab;
 
     public MessagesListFragment() {
         // Required empty public constructor
@@ -48,6 +54,7 @@ public class MessagesListFragment extends Fragment implements MessagesListContra
         super.onCreate(savedInstanceState);
 
         mAdapter = new MessagesListRecyclerAdapter();
+        mAdapter.setListener(message -> mPresenter.onMessageLongClick(message));
 
         setHasOptionsMenu(true);
     }
@@ -62,6 +69,15 @@ public class MessagesListFragment extends Fragment implements MessagesListContra
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
+        mComposeFab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        mLinkToFab = (FloatingActionButton) getActivity().findViewById(R.id.fab_linkTo);
+
+        mComposeFab.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), MessageSendActivity.class);
+            startActivity(intent);
+        });
+
+        mLinkToFab.setOnClickListener(v -> mPresenter.onLinkToFabClick());
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
@@ -120,7 +136,29 @@ public class MessagesListFragment extends Fragment implements MessagesListContra
     }
 
     @Override
+    public void showLinkToFab() {
+        mLinkToFab.show();
+    }
+
+    @Override
+    public void hideLinkToFab() {
+        mLinkToFab.hide();
+    }
+
+    @Override
+    public void showLinkToComposePage(String linkToId) {
+        Intent intent = new Intent(getActivity(), MessageSendActivity.class);
+        intent.putExtra(MessageSendFragment.EXTRA_LINKED_TO, linkToId);
+        startActivity(intent);
+    }
+
+    @Override
     public void appendMessages(ArrayList<Message> messages) {
         mAdapter.appendMessages(messages);
+    }
+
+    @Override
+    public void setSessionId(String sessionId) {
+        mAdapter.setSessionId(sessionId);
     }
 }

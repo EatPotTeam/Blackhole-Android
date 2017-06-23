@@ -1,7 +1,10 @@
 package com.blackhole.blackhole.mainpage.presenters;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
+import com.blackhole.blackhole.data.entities.Message;
 import com.blackhole.blackhole.data.repositories.IMessagesRepository;
 import com.blackhole.blackhole.data.repositories.IUsersRepository;
 import com.blackhole.blackhole.mainpage.contracts.MessagesListContract;
@@ -18,21 +21,34 @@ import io.reactivex.disposables.Disposable;
 
 public class MessagesListPresenter implements MessagesListContract.Presenter {
     private static final String TAG = "MessagesListPresenter";
+    private static final long LINK_TO_FAB_SHOW_TIMEOUT = 3000;
 
     private final IUsersRepository mUserRepository;
     private final IMessagesRepository mMessageRepository;
     private final MessagesListContract.View mView;
+
+    private Runnable mLinkToFabAutoHideRunnable = new Runnable() {
+        @Override
+        public void run() {
+            mView.hideLinkToFab();
+            mRunnableRemoved = true;
+        }
+    };
+    private boolean mRunnableRemoved = true;
 
     /**
      * Add Disposable (returned from Observable.subscribe) to this list and they will be disposed
      * when this presenter is destroyed.
      */
     private LinkedList<Disposable> mOnDestroyDisposables = new LinkedList<>();
+    private Handler mUiHandler;
+    private Message mLinkToMessage;
 
     public MessagesListPresenter(IUsersRepository usersRepository, IMessagesRepository messagesRepository, MessagesListContract.View view) {
         mUserRepository = usersRepository;
         mMessageRepository = messagesRepository;
         mView = view;
+        mUiHandler = new Handler(Looper.getMainLooper());
     }
 
     @Override
@@ -40,6 +56,9 @@ public class MessagesListPresenter implements MessagesListContract.Presenter {
         if (("").equals(mUserRepository.getUserId())) {
             mView.switchToNicknamePage();
         } else {
+            mUserRepository.renewSessionId();
+            mView.setSessionId(mUserRepository.getSessionId());
+
             Disposable disposable = mUserRepository.refreshLastActiveTime()
                     .flatMap(o -> mMessageRepository.startFetchingNewMessages(mUserRepository.getUserId()))
                     .subscribe(arrayListRxResult -> {
@@ -65,5 +84,22 @@ public class MessagesListPresenter implements MessagesListContract.Presenter {
             iterator.next().dispose();
             iterator.remove();
         }
+    }
+
+    @Override
+    public void onMessageLongClick(Message message) {
+        mView.showLinkToFab();
+        mLinkToMessage = message;
+        if (!mRunnableRemoved) {
+            mUiHandler.removeCallbacks(mLinkToFabAutoHideRunnable);
+            mRunnableRemoved = true;
+        }
+        mUiHandler.postDelayed(mLinkToFabAutoHideRunnable, LINK_TO_FAB_SHOW_TIMEOUT);
+        mRunnableRemoved = false;
+    }
+
+    @Override
+    public void onLinkToFabClick() {
+        mView.showLinkToComposePage(mLinkToMessage.getSessionId());
     }
 }

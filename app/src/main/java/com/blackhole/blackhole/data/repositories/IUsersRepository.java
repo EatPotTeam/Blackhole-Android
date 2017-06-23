@@ -20,4 +20,8 @@ public interface IUsersRepository {
     void setNickname(String nickname);
 
     String getNickname();
+
+    void renewSessionId();
+
+    String getSessionId();
 }

@@ -9,6 +9,8 @@ public class Message {
     private String nickname;
     private String content;
     private long createdTime;
+    private String sessionId;
+    private String reply;
 
     public Message() {}
 
@@ -34,5 +36,21 @@ public class Message {
 
     public void setCreatedTime(long createdTime) {
         this.createdTime = createdTime;
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
+
+    public String getReply() {
+        return reply;
+    }
+
+    public void setReply(String linkedTo) {
+        this.reply = linkedTo;
     }
 }

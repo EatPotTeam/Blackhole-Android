@@ -8,10 +8,9 @@ import com.blackhole.blackhole.data.repositories.IMessagesRepository;
 import com.blackhole.blackhole.data.repositories.IUsersRepository;
 import com.blackhole.blackhole.sendpage.contracts.MessageSendContract;
 
-import io.reactivex.disposables.Disposable;
-
 /**
- * Created by YZQ on 2017/5/27.
+ * Author: YZQ
+ * Date  : 2017/5/27
  */
 
 public class MessageSendPresenter implements MessageSendContract.Presenter {
@@ -20,6 +19,8 @@ public class MessageSendPresenter implements MessageSendContract.Presenter {
     private IUsersRepository mUserRepository;
     private IMessagesRepository mMessagesRepository;
     private MessageSendContract.View mView;
+
+    private String mLinkedTo;
 
     public MessageSendPresenter(IUsersRepository ur, IMessagesRepository mr, MessageSendContract.View view) {
         mUserRepository = ur;
@@ -38,7 +39,9 @@ public class MessageSendPresenter implements MessageSendContract.Presenter {
         Message mes = new Message();
         mes.setContent(message);
         mes.setNickname(nickname);
-        Disposable disposable = mMessagesRepository.sendMessage(mes)
+        mes.setSessionId(mUserRepository.getSessionId());
+        mes.setReply(mLinkedTo);
+        mMessagesRepository.sendMessage(mes)
                 .subscribe(messageRxResult -> {
                     if (messageRxResult.isError()) {
                         Log.w(TAG, "message send fail");
@@ -49,6 +52,10 @@ public class MessageSendPresenter implements MessageSendContract.Presenter {
                     Log.w(TAG, "network fail", throwable);
                     mView.showErrorToast("Network problem");
                 });
-        //disposable.dispose();
+    }
+
+    @Override
+    public void viewCreated(String linkedTo) {
+        mLinkedTo = linkedTo == null ? "" : linkedTo;
     }
 }

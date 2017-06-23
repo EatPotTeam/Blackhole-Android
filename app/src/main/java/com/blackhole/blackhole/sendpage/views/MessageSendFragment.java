@@ -1,9 +1,7 @@
 package com.blackhole.blackhole.sendpage.views;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,10 +16,11 @@ import android.widget.Toast;
 
 import com.blackhole.blackhole.R;
 import com.blackhole.blackhole.common.RC;
-import com.blackhole.blackhole.mainpage.MainActivity;
 import com.blackhole.blackhole.sendpage.contracts.MessageSendContract;
 
 public class MessageSendFragment extends Fragment implements MessageSendContract.View {
+    public static final String EXTRA_LINKED_TO = "LINKED_TO";
+
     private MessageSendContract.Presenter mPresenter;
     private EditText mEditorText;
 
@@ -37,8 +36,6 @@ public class MessageSendFragment extends Fragment implements MessageSendContract
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        if (getArguments() != null) {
-        }
     }
 
     @Override
@@ -52,6 +49,7 @@ public class MessageSendFragment extends Fragment implements MessageSendContract
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mEditorText = (EditText) view.findViewById(R.id.send_page_editor);
+        mPresenter.viewCreated(getActivity().getIntent().getStringExtra(EXTRA_LINKED_TO));
     }
 
     @Override

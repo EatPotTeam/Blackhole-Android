@@ -15,6 +15,10 @@ public interface MessagesListContract {
         void viewCreated();
 
         void destroy();
+
+        void onMessageLongClick(Message message);
+
+        void onLinkToFabClick();
     }
 
     interface View extends BaseView<Presenter> {
@@ -24,6 +28,14 @@ public interface MessagesListContract {
 
         void showFailToFetchMessagesError();
 
+        void showLinkToFab();
+
+        void hideLinkToFab();
+
+        void showLinkToComposePage(String linkToId);
+
         void appendMessages(ArrayList<Message> messages);
+
+        void setSessionId(String sessionId);
     }
 }

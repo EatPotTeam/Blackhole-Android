@@ -52,7 +52,7 @@ public class MessagesListRecyclerAdapter extends RecyclerView.Adapter<MessagesLi
             }
             return true;
         });
-        holder.itemView.setBackgroundColor(mSessionId != null && mSessionId.equals(mDataSet.get(position).getSessionId())
+        holder.itemView.setBackgroundColor(mSessionId != null && mSessionId.equals(mDataSet.get(position).getReply())
                 ? ContextCompat.getColor(holder.itemView.getContext(), R.color.colorMessageBackgroundLinked)
                 : ContextCompat.getColor(holder.itemView.getContext(), R.color.colorMessageBackground));
         holder.nicknameTextView.setText(mDataSet.get(position).getNickname());

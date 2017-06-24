@@ -46,17 +46,17 @@ public class MessageSendPresenter implements MessageSendContract.Presenter {
         mView.startLoading();
         mMessagesRepository.sendMessage(mes)
                 .subscribe(messageRxResult -> {
+                    mView.stopLoading();
                     if (messageRxResult.isError()) {
                         Log.w(TAG, "message send fail");
                         mView.showErrorToast("message send fail");
                         return;
                     }
-                    mView.stopLoading();
                     mView.successReturn();
                 }, throwable -> {
+                    mView.stopLoading();
                     Log.w(TAG, "network fail", throwable);
                     mView.showErrorToast("Network problem");
-                    mView.stopLoading();
                 });
     }
 

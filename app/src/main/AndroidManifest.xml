@@ -31,13 +31,12 @@
         <activity
             android:name=".sendpage.MessageSendActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustResize|stateHidden">
-        </activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity
             android:name=".loginpage.LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".settingspage.SettingsActivity" />
     </application>
 
 </manifest>

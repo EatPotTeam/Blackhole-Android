@@ -6,9 +6,10 @@ android {
     defaultConfig {
         applicationId "com.blackhole.blackhole"
         minSdkVersion 14
+        //noinspection OldTargetApi
         targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        versionCode app.debugVersion
+        versionName app.debugVersionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         // This is only required on Android Studio 2.3.2 or lower
         jackOptions {
@@ -22,11 +23,13 @@ android {
     buildTypes {
         debug {
             buildConfigField "String", "API_HOST", "\"https://ci.blackhole.perqin.com/\""
+            buildConfigField "String", "APP_VERSION", "\"${app.debugVersionName}\""
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField "String", "API_HOST", "\"https://blackhole.perqin.com/\""
+            buildConfigField "String", "APP_VERSION", "\"${app.releaseVersionName}\""
         }
     }
 }

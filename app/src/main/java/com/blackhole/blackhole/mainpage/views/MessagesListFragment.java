@@ -25,6 +25,7 @@ import com.blackhole.blackhole.mainpage.contracts.MessagesListContract;
 import com.blackhole.blackhole.mainpage.ui.MessagesListRecyclerAdapter;
 import com.blackhole.blackhole.sendpage.MessageSendActivity;
 import com.blackhole.blackhole.sendpage.views.MessageSendFragment;
+import com.blackhole.blackhole.settingspage.SettingsActivity;
 import com.blackhole.blackhole.util.CustomDivider;
 
 import java.util.ArrayList;
@@ -111,6 +112,10 @@ public class MessagesListFragment extends Fragment implements MessagesListContra
                 Intent intent = new Intent(this.getActivity(), LoginActivity.class);
                 intent.putExtra(LoginFragment.EXTRA_IS_CHANGING_NICKNAME, true);
                 this.getActivity().startActivityForResult(intent, 0);
+                return true;
+            case R.id.action_settings:
+                getActivity().startActivity(new Intent(getActivity(), SettingsActivity.class));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

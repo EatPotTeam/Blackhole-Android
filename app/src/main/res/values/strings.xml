@@ -20,4 +20,12 @@
     <string name="message_palette_title">Pull up to change text color</string>
     <string name="change_button">Change</string>
     <string name="send">Send</string>
+    <string name="about">About</string>
+    <string name="always_show_intro_page">Always show Intro Page</string>
+    <string name="only_show_intro_page_at_first_launch_if_disabled">Only show Intro Page at first launch if disabled</string>
+    <string name="developer_options">Developer options</string>
+
+    <string name="pk_about" translatable="false">ABOUT</string>
+    <string name="pk_always_show_intro_page" translatable="false">ALWAYS_SHOW_INTRO_PAGE</string>
+    <string name="pk_category_developer_options" translatable="false">CATEGORY_DEVELOPER_OPTIONS</string>
 </resources>

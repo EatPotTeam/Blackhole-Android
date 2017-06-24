@@ -1,7 +1,7 @@
 ext {
     app = [
-            debugVersion: 1,
-            debugVersionName: "0.0.1-debug",
+            debugVersion: 2,
+            debugVersionName: "0.0.2-debug",
             releaseVersion: 1,
             releaseVersionName: "0.0.1"
     ]

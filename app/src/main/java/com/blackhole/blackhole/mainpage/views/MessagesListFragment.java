@@ -16,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.blackhole.blackhole.R;
 import com.blackhole.blackhole.data.entities.Message;
@@ -134,10 +135,12 @@ public class MessagesListFragment extends Fragment implements MessagesListContra
 
     @Override
     public void showFailToBeOnlineError() {
+        Toast.makeText(getActivity(), R.string.fail_to_connect_to_server, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showFailToFetchMessagesError() {
+        Toast.makeText(getActivity(), R.string.fail_to_get_messages_maybe_network_unavailable, Toast.LENGTH_SHORT).show();
     }
 
     @Override

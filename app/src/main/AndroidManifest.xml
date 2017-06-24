@@ -27,16 +27,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".sendpage.MessageSendActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize|stateHidden" />
-
         <activity
             android:name=".loginpage.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".settingspage.SettingsActivity" />
+        <activity
+            android:name=".intropage.IntroActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

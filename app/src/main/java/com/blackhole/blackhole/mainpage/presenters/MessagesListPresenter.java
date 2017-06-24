@@ -13,6 +13,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import io.reactivex.disposables.Disposable;
+import retrofit2.HttpException;
 
 /**
  * Author: perqin
@@ -72,6 +73,11 @@ public class MessagesListPresenter implements MessagesListContract.Presenter {
                         Log.w(TAG, "viewCreated: Failed to fetch", throwable);
                         Log.d(TAG, "viewCreated: User id = " + mUserRepository.getUserId());
                         mView.showFailToBeOnlineError();
+                        if (throwable instanceof HttpException) {
+                            if (((HttpException) throwable).code() == 401) {
+                                mView.switchToNicknamePage();
+                            }
+                        }
                     });
             mOnDestroyDisposables.add(disposable);
         }

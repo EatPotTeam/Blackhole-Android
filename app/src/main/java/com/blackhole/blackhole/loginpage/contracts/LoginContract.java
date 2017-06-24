@@ -3,12 +3,13 @@ package com.blackhole.blackhole.loginpage.contracts;
 import com.blackhole.blackhole.framework.BaseView;
 
 /**
- * Created by YZQ on 2017/6/8.
+ * Author: YZQ
+ * Date  : 2017/6/8
  */
 
 public interface LoginContract {
     interface Presenter {
-        void viewCreated(boolean isChangingNickname);
+        void viewCreated(boolean isChangingNickname, boolean firstLaunch, boolean alwaysShowIntro);
 
         void loginOrChangeNickname(String nickname);
     }
@@ -20,5 +21,7 @@ public interface LoginContract {
         void finishLogin();
 
         void finishChangingNickname();
+
+        void showIntroPage();
     }
 }

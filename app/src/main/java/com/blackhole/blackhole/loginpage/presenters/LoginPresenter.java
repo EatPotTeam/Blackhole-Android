@@ -2,12 +2,14 @@ package com.blackhole.blackhole.loginpage.presenters;
 
 import android.util.Log;
 
+import com.blackhole.blackhole.BuildConfig;
 import com.blackhole.blackhole.data.repositories.IMessagesRepository;
 import com.blackhole.blackhole.data.repositories.IUsersRepository;
 import com.blackhole.blackhole.loginpage.contracts.LoginContract;
 
 /**
- * Created by YZQ on 2017/6/8.
+ * Author: YZQ
+ * Date  : 2017/6/8
  */
 
 public class LoginPresenter implements LoginContract.Presenter{
@@ -25,8 +27,18 @@ public class LoginPresenter implements LoginContract.Presenter{
     }
 
     @Override
-    public void viewCreated(boolean isChangingNickname) {
+    public void viewCreated(boolean isChangingNickname, boolean firstLaunch, boolean alwaysShowIntro) {
         mIsChangingNickname = isChangingNickname;
+
+        final boolean showIntro;
+        if (BuildConfig.DEBUG) {
+            showIntro = alwaysShowIntro || firstLaunch;
+        } else {
+            showIntro = firstLaunch;
+        }
+        if (showIntro) {
+            mView.showIntroPage();
+        }
     }
 
     @Override
@@ -47,9 +59,7 @@ public class LoginPresenter implements LoginContract.Presenter{
                         } else {
                             mView.finishLogin();
                         }
-                    }, throwable -> {
-                        Log.w(TAG, "Network fail", throwable);
-                    });
+                    }, throwable -> Log.w(TAG, "Network fail", throwable));
         }
     }
 }

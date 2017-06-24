@@ -27,5 +27,9 @@ public interface MessageSendContract {
         void successReturn();
 
         void setEditorColor(int color);
+
+        void startLoading();
+
+        void stopLoading();
     }
 }

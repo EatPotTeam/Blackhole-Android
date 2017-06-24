@@ -1,6 +1,8 @@
 package com.blackhole.blackhole.sendpage.views;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.drawable.RippleDrawable;
@@ -29,6 +31,7 @@ public class MessageSendFragment extends Fragment implements MessageSendContract
     private MessageSendContract.Presenter mPresenter;
     private EditText mEditorText;
     private GridLayout mGridLayout;
+    private AlertDialog mAlertDialog;
 
     public MessageSendFragment() {
         // Required empty public constructor
@@ -138,5 +141,18 @@ public class MessageSendFragment extends Fragment implements MessageSendContract
     @Override
     public void setEditorColor(int color) {
         mEditorText.setTextColor(color);
+    }
+
+    @Override
+    public void startLoading() {
+        mAlertDialog = new ProgressDialog.Builder(getActivity()).setCancelable(false).setMessage(R.string.sending_message).create();
+        mAlertDialog.show();
+    }
+
+    @Override
+    public void stopLoading() {
+        if (mAlertDialog != null) {
+            mAlertDialog.cancel();
+        }
     }
 }

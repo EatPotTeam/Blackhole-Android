@@ -47,11 +47,11 @@ public class LoginPresenter implements LoginContract.Presenter{
 
     @Override
     public void loginOrChangeNickname(String nickname) {
-        if (nickname.isEmpty()) {
+        if (nickname.trim().isEmpty()) {
             mView.showErrorToast("Empty nickname");
             return;
         }
-        mUserRepository.setNickname(nickname);
+        mUserRepository.setNickname(nickname.replace("\n", " "));
         if (mIsChangingNickname) {
             mView.finishChangingNickname();
         } else {

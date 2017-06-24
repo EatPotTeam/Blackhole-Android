@@ -33,7 +33,7 @@ public class MessageSendPresenter implements MessageSendContract.Presenter {
 
     @Override
     public void sendMessage(String message) {
-        if (message.length() == 0) {
+        if (message.trim().length() == 0) {
             mView.showErrorToast(CommonFactory.EDITOR_EMPTY_TEXT);
             return;
         }
@@ -43,16 +43,20 @@ public class MessageSendPresenter implements MessageSendContract.Presenter {
         mes.setNickname(nickname);
         mes.setSessionId(mUserRepository.getSessionId());
         mes.setReply(mLinkedTo);
+        mView.startLoading();
         mMessagesRepository.sendMessage(mes)
                 .subscribe(messageRxResult -> {
                     if (messageRxResult.isError()) {
                         Log.w(TAG, "message send fail");
+                        mView.showErrorToast("message send fail");
                         return;
                     }
+                    mView.stopLoading();
                     mView.successReturn();
                 }, throwable -> {
                     Log.w(TAG, "network fail", throwable);
                     mView.showErrorToast("Network problem");
+                    mView.stopLoading();
                 });
     }
 

@@ -32,6 +32,7 @@
     <string name="fail_to_get_messages_maybe_network_unavailable">Fail to get messages. Maybe network is unavailable.</string>
     <string name="set_nickname">Set nickname</string>
     <string name="change_nickname">Change nickname</string>
+    <string name="sending_message">Sending message…</string>
 
     <string name="pk_about" translatable="false">ABOUT</string>
     <string name="pk_always_show_intro_page" translatable="false">ALWAYS_SHOW_INTRO_PAGE</string>

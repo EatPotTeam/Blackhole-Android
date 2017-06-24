@@ -45,7 +45,7 @@ android {
         }
         release {
             signingConfig signingConfigs.main
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField "String", "API_HOST", "\"https://blackhole.perqin.com/\""
             buildConfigField "String", "APP_VERSION", "\"${app.releaseVersionName}\""

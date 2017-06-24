@@ -24,5 +24,9 @@ public interface LoginContract {
         void finishChangingNickname();
 
         void showIntroPage();
+
+        void startLoading();
+
+        void stopLoading();
     }
 }

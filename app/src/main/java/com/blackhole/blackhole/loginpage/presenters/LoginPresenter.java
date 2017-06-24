@@ -55,15 +55,20 @@ public class LoginPresenter implements LoginContract.Presenter{
         if (mIsChangingNickname) {
             mView.finishChangingNickname();
         } else {
+            mView.startLoading();
             mUserRepository.requestNewUserId()
                     .subscribe(userRxResult -> {
+                        mView.stopLoading();
                         if (userRxResult.isError()) {
                             Log.w(TAG, userRxResult.toString());
                             mView.showErrorToast("Set nickname fail, try again");
                         } else {
                             mView.finishLogin();
                         }
-                    }, throwable -> Log.w(TAG, "Network fail", throwable));
+                    }, throwable -> {
+                        mView.stopLoading();
+                        Log.w(TAG, "Network fail", throwable);
+                    });
         }
     }
 }

@@ -1,6 +1,8 @@
 package com.blackhole.blackhole.loginpage.views;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -28,6 +30,7 @@ public class LoginFragment extends Fragment implements LoginContract.View, View.
     private LoginContract.Presenter mPresenter;
     private TextInputEditText nickname;
     private FloatingActionButton mOkFab;
+    private AlertDialog mAlertDialog;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -119,5 +122,18 @@ public class LoginFragment extends Fragment implements LoginContract.View, View.
     @Override
     public void showIntroPage() {
         getActivity().startActivity(new Intent(getActivity(), IntroActivity.class));
+    }
+
+    @Override
+    public void startLoading() {
+        mAlertDialog = new ProgressDialog.Builder(getActivity()).setCancelable(false).setMessage(R.string.sending_message).create();
+        mAlertDialog.show();
+    }
+
+    @Override
+    public void stopLoading() {
+        if (mAlertDialog != null) {
+            mAlertDialog.cancel();
+        }
     }
 }

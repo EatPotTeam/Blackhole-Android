@@ -17,6 +17,7 @@
 
     <string name="login_hint">Input nickname here</string>
     <string name="login_button">Login</string>
-    <string name="message_palette_title">Pull to choose color</string>
+    <string name="message_palette_title">Pull up to change text color</string>
     <string name="change_button">Change</string>
+    <string name="send">Send</string>
 </resources>

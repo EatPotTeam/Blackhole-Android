@@ -30,7 +30,8 @@
 
         <activity
             android:name=".sendpage.MessageSendActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize|stateHidden">
         </activity>
 
         <activity

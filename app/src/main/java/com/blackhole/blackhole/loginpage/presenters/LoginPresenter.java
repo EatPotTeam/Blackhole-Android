@@ -30,6 +30,10 @@ public class LoginPresenter implements LoginContract.Presenter{
     public void viewCreated(boolean isChangingNickname, boolean firstLaunch, boolean alwaysShowIntro) {
         mIsChangingNickname = isChangingNickname;
 
+        if (mIsChangingNickname) {
+            mView.setNicknameEditText(mUserRepository.getNickname());
+        }
+
         final boolean showIntro;
         if (BuildConfig.DEBUG) {
             showIntro = alwaysShowIntro || firstLaunch;

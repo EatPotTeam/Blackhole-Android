@@ -1,6 +1,7 @@
 package com.blackhole.blackhole.loginpage;
 
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -19,7 +20,14 @@ public class LoginActivity extends AppCompatActivity{
         setContentView(R.layout.activity_login);
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.register_toolbar);
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
+        }
 
         FragmentManager fm = getSupportFragmentManager();
         LoginFragment registerFragment = (LoginFragment) fm.findFragmentById(R.id.frameLayout_login_fragmentContainer);

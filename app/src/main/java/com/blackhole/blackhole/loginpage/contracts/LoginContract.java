@@ -15,6 +15,7 @@ public interface LoginContract {
     }
 
     interface View extends BaseView<Presenter>{
+        void setNicknameEditText(String nickname);
 
         void showErrorToast(String s);
 

@@ -6,12 +6,14 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blackhole.blackhole.BuildConfig;
@@ -24,8 +26,8 @@ public class LoginFragment extends Fragment implements LoginContract.View, View.
     public static final String EXTRA_IS_CHANGING_NICKNAME = "IS_CHANGING_NICKNAME";
 
     private LoginContract.Presenter mPresenter;
-    private EditText nickname;
-    private Button mButton;
+    private TextInputEditText nickname;
+    private FloatingActionButton mOkFab;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -38,6 +40,7 @@ public class LoginFragment extends Fragment implements LoginContract.View, View.
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -53,16 +56,26 @@ public class LoginFragment extends Fragment implements LoginContract.View, View.
 
         boolean isChangingNickname = getActivity().getIntent().getBooleanExtra(EXTRA_IS_CHANGING_NICKNAME, false);
 
-        nickname = (EditText)view.findViewById(R.id.login_nickname);
-        mButton = (Button)view.findViewById(R.id.login_button);
-        mButton.setText(isChangingNickname ? R.string.change_button : R.string.login_button);
-        mButton.setOnClickListener(this);
+        TextView titleTextView = (TextView) getActivity().findViewById(R.id.textView_title);
+        titleTextView.setText(isChangingNickname ? R.string.change_nickname : R.string.set_nickname);
+        mOkFab = (FloatingActionButton) getActivity().findViewById(R.id.fab_ok);
+        mOkFab.setOnClickListener(this);
+        nickname = (TextInputEditText) view.findViewById(R.id.login_nickname);
 
         final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
         final boolean firstLaunch = sp.getBoolean(getString(R.string.pk_first_launch), true);
         sp.edit().putBoolean(getString(R.string.pk_first_launch), false).apply();
         final boolean alwaysShowIntro = sp.getBoolean(getString(R.string.pk_always_show_intro_page), BuildConfig.DEBUG);
         mPresenter.viewCreated(isChangingNickname, firstLaunch, alwaysShowIntro);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            getActivity().finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -73,12 +86,17 @@ public class LoginFragment extends Fragment implements LoginContract.View, View.
     @Override
     public void onClick(View v) {
         switch(v.getId()) {
-            case R.id.login_button:
+            case R.id.fab_ok:
                 mPresenter.loginOrChangeNickname(nickname.getText().toString());
                 break;
             default:
                 break;
         }
+    }
+
+    @Override
+    public void setNicknameEditText(String nickname) {
+        this.nickname.setText(nickname);
     }
 
     @Override

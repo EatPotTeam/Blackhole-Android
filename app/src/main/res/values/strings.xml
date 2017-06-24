@@ -32,9 +32,13 @@
     <string name="intro_description_3">I can not fabricate any more :(</string>
     <string name="fail_to_connect_to_server">Fail to connect to server</string>
     <string name="fail_to_get_messages_maybe_network_unavailable">Fail to get messages. Maybe network is unavailable.</string>
+    <string name="set_nickname">Set nickname</string>
+    <string name="change_nickname">Change nickname</string>
 
     <string name="pk_about" translatable="false">ABOUT</string>
     <string name="pk_always_show_intro_page" translatable="false">ALWAYS_SHOW_INTRO_PAGE</string>
     <string name="pk_category_developer_options" translatable="false">CATEGORY_DEVELOPER_OPTIONS</string>
     <string name="pk_first_launch">FIRST_LAUNCH</string>
+
+    <string name="cd_icon_on_login_page">This is an icon on Login Page</string>
 </resources>

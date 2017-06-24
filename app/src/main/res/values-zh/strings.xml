@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">黑洞</string>
+    <string name="about">关于</string>
+    <string name="action_rename">更改昵称</string>
+    <string name="action_settings">设置</string>
+    <string name="always_show_intro_page">总是显示引导页面</string>
+    <string name="cd_icon_on_login_page">这是昵称编辑页面的图标</string>
+    <string name="change_button">更改</string>
+    <string name="change_nickname">更改昵称</string>
+    <string name="content_example">x</string>
+    <string name="developer_options">开发者选项</string>
+    <string name="fail_to_connect_to_server">无法连接到服务器</string>
+    <string name="fail_to_get_messages_maybe_network_unavailable">无法获取新消息，可能是网络不可用</string>
+    <string name="intro_description_1">黑洞是一个自由的匿名社区</string>
+    <string name="intro_description_2">你可以在这里自由分享有趣的事情，没有人知道你的真实身份。所有消息在退出应用后就会销毁。</string>
+    <string name="intro_description_3">选择一个昵称，发表你的想法。</string>
+    <string name="intro_title_1">欢迎进入黑洞</string>
+    <string name="intro_title_2">分享你的想法</string>
+    <string name="intro_title_3">开始使用吧！</string>
+    <string name="login_hint">输入昵称</string>
+    <string name="message_content">消息内容</string>
+    <string name="set_nickname">设置昵称</string>
+    <string name="sent_time">发送时间</string>
+    <string name="send_page_name">发送消息</string>
+    <string name="send_page_editor_hint">在这里输入消息</string>
+    <string name="send">发送</string>
+    <string name="only_show_intro_page_at_first_launch_if_disabled">如果禁用，只有首次进入昵称编辑页面才会弹出引导页面</string>
+    <string name="nickname">昵称</string>
+    <string name="navigation_drawer_open">x</string>
+    <string name="navigation_drawer_close">x</string>
+    <string name="message_palette_title">向上拖拽更改消息颜色</string>
+</resources>
